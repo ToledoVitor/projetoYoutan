@@ -1,1 +1,9 @@
 # projetoYoutan
+
+DEPENDENCIES:
+- django
+- django-rest-framework
+- django-cors-headers
+- djoser
+- pillow
+- stripe
