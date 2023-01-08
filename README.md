@@ -7,6 +7,8 @@ PIP DEPENDENCIES:
 - djoser
 - pillow
 - stripe
+- model_bakery
+
 
 NPM DEPENDENCIES:
 - -g @vue/cli
