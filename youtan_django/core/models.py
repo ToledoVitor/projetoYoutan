@@ -60,13 +60,14 @@ class Leilao(models.Model):
     def __str__(self):
         return f'Leilao {self.id} - FIM: {self.due_date}'
 
-    def get_latest_lance(self):
+    def get_latest_lance_value(self):
         return (
             self
             .lance_set
             .filter(deleted=False)
             .order_by("-created_at")
             .first()
+            .money_value
         )
 
 

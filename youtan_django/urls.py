@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 
 from youtan_django.core import views
@@ -23,4 +26,4 @@ urlpatterns = [
 
     path('api/v1/veiculo/<int:veiculo_id>/', views.get_veiculo_info),
     path('api/v1/veiculo/<int:veiculo_id>/lances', views.get_veiculo_lances),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
