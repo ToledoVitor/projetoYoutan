@@ -1,14 +1,13 @@
 from rest_framework import serializers
 
-from core.models import Veiculo
+from youtan_django.core.models import Veiculo
 
 class VeiculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Veiculo
         fields = (
+            'id',
             'name',
-            'slug',
-            'leilao',
             'tipo_veiculo',
             'placa',
             'deleted',

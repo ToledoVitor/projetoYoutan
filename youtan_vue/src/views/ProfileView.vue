@@ -5,50 +5,49 @@
         <h1 class="title">Minha conta</h1>
       </div>
 
-      <div class="column is-12">
-        <button @click="logout()" class="button is-danger">Sair</button>
-      </div>
-
       <hr>
 
       <div class="column is-12">
-        <h2 class="subtitle">Meus lances</h2>
-
-        <!-- <OrderSummary
-          v-for="order in orders"
-          v-bind:key="order.id"
-          v-bind:order="order"
-        /> -->
+        <LanceSummary
+        :lances="lances"
+        />
       </div>
 
       <div class="column is-12">
-        <h2 class="subtitle">Meus leilões</h2>
-
-        <!-- <OrderSummary
-          v-for="order in orders"
-          v-bind:key="order.id"
-          v-bind:order="order"
-        /> -->
+        <HouseSummary
+        :houses="houses"
+        />
       </div>
-
+        
+      <div class="column is-12">
+        <VehicleSummary
+        :vehicles="vehicles"
+        />
+      </div>
+  
     </div>
   </div>
 </template>
 
 <script>
-import { awaitExpression } from '@babel/types';
 import axios from 'axios'
-// import OrderSummary from '@/components/OrderSummary.vue'
+import LanceSummary from '@/components/LanceSummary.vue'
+import HouseSummary from '@/components/HouseSummary.vue'
+import VehicleSummary from '@/components/VehicleSummary.vue'
 
 export default {
-  name: 'MyAccount',
+  name: 'ProfileView',
   components: {
-    // OrderSummary
+    LanceSummary,
+    HouseSummary,
+    VehicleSummary,
   },
 
   data() {
     return {
-      orders: []
+      lances: [],
+      houses: [],
+      vehicles: [],
     }
   },
 
@@ -56,21 +55,35 @@ export default {
     document.title = 'Minha conta | Leiloẽs Já!'
 
     this.$store.commit('setIsLoading', true)
+    await this.getMyHouses()
+    await this.getMyVehicles()
     await this.getMyLances()
-    await this.getMyLeiloes()
     this.$store.commit('setIsLoading', false)
   },
 
   methods: {
-    logout() {
-      axios.defaults.headers.common["Authorization"] = ""
-      localStorage.removeItem("token")
-      localStorage.removeItem("username")
-      localStorage.removeItem("userid")
-      this.$store.commit('removeToken')
-      this.$router.push('/')
+    async getMyHouses () {
+      await axios
+        .get('/api/v1/houses/')
+        .then(response => {
+          this.houses = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })          
     },
-
+    
+    async getMyVehicles () {
+      await axios
+        .get('/api/v1/vehicles/')
+        .then(response => {
+          this.vehicles = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })        
+    },
+    
     async getMyLances() {
       await axios
         .get('/api/v1/lances/')

@@ -11,19 +11,16 @@ urlpatterns = [
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
 
-    path('api/v1/entidade-financeira/create', views.create_entidade),
-    path('api/v1/entidade-financeira/<int:entidade_id>/delete', views.delete_entidade),
+    path('api/v1/lances/', views.LanceView.as_view()),
+    path('api/v1/lances/<int:lance_id>/', views.LanceView.as_view()),
 
-    path('api/v1/leilao/<int:leilao_id>/', views.get_leilao_info),
-    path('api/v1/leilao/<int:leilao_id>/lances', views.get_leilao_lances),
-    path('api/v1/leilao/<int:leilao_id>/create_leilao_lance', views.create_leilao_lance),
+    path('api/v1/houses/', views.HouseView.as_view()),
+    path('api/v1/houses/<int:house_id>', views.HouseView.as_view()),
 
-    path('api/v1/lance/<int:lance_id>/', views.get_lance_info),
-    path('api/v1/lance/<int:lance_id>/delete', views.delete_lance),
+    path('api/v1/vehicles/', views.VehicleView.as_view()),
+    path('api/v1/vehicles/<int:vehicle_id>', views.VehicleView.as_view()),
 
-    path('api/v1/imovel/<int:imovel_id>/', views.get_imovel_info),
-    path('api/v1/imovel/<int:imovel_id>/lances', views.get_imovel_lances),
-
-    path('api/v1/veiculo/<int:veiculo_id>/', views.get_veiculo_info),
-    path('api/v1/veiculo/<int:veiculo_id>/lances', views.get_veiculo_lances),
+    path('api/v1/leiloes/', views.LeiloesView.as_view()),
+    path('api/v1/<int:leilao_id>/leilao/', views.LeilaoDetailView.as_view()),
+    path('api/v1/entidade-financeira/', views.EntidadeFinanceiraView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

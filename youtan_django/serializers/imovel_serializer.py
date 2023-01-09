@@ -1,16 +1,21 @@
 from rest_framework import serializers
 
-from core.models import Imovel
+from youtan_django.core.models import Imovel
 
 class ImovelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Imovel
         fields = (
+            'id',
             'name',
-            'slug',
-            'leilao',
             'tipo_imovel',
-            'placa',
+            'logradouro',
+            'bairro',
+            'numero',
+            'cep',
+            'cidade',
+            'estado',
+
             'deleted',
             'created_at',
             'updated_at',

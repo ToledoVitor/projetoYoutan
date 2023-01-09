@@ -8,22 +8,14 @@ from django.db.models.fields import DecimalField
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 
 from youtan_django.core.commons import Estados
 
 
 class EntidadeFinanceira(models.Model):
     name = models.CharField(default="", blank=True, max_length=256)
-    slug = models.SlugField(default="")
     cnpj = models.CharField(default="", blank=True, max_length=14)
-
-    logradouro = models.CharField(default="", blank=True, max_length=256)
-    bairro = models.CharField(default="", blank=True, max_length=256)
-    numero = models.CharField(default="", blank=True, max_length=256)
-    cep = models.CharField(default="", blank=True, max_length=256)
-
-    cidade = models.CharField(default="", blank=True, max_length=256)
-    estado = models.CharField(max_length=2, choices=Estados.choices)
 
     class Meta:
         ordering = ('name',)
@@ -33,20 +25,14 @@ class EntidadeFinanceira(models.Model):
 
 
 class Leilao(models.Model):
-    # https://docs.djangoproject.com/en/2.1/ref/contrib/contenttypes/#generic-relations
-
     item_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     item_object = GenericForeignKey("item_type", "item_id")
     # That's the field that holds the other model instance (Imovel or Veiculo) 
     item_id = models.PositiveIntegerField()
     
     minimum_increment = DecimalField(max_digits=12, decimal_places=2, default=D(0))
-
-    # When it get's closed by user or admin    
     ended = models.BooleanField(default=False)
     ended_at = models.DateTimeField(blank=True, null=True)
-
-    # When it will automatically ends
     due_date = models.DateTimeField(blank=True, null=True)
 
     entidade_financeira = models.ForeignKey(EntidadeFinanceira, on_delete=models.CASCADE)
@@ -66,10 +52,55 @@ class Leilao(models.Model):
             .lance_set
             .filter(deleted=False)
             .order_by("-created_at")
+            .values("money_value")
             .first()
-            .money_value
         )
 
+    def get_item_type(self):
+        return self.item_type.app_labeled_name
+
+    def get_item_object(self):
+        if self.item_type.app_labeled_name == 'core | imovel':
+            return {
+                'name': self.item_object.name,
+
+                'image': self.item_object.get_image(),
+                'thumbnail': self.item_object.get_thumbnail(),
+
+                'tipo_imovel': self.item_object.tipo_imovel,
+                'logradouro': self.item_object.logradouro,
+                'bairro': self.item_object.bairro,
+                'numero': self.item_object.numero,
+                'cep': self.item_object.cep,
+                'cidade': self.item_object.cidade,
+                'estado': self.item_object.estado,
+                'deleted': self.item_object.deleted,
+                'created_at': self.item_object.created_at,
+                'updated_at': self.item_object.updated_at,   
+            }
+
+        if self.item_type.app_labeled_name == 'core | veiculo':
+            return {
+                'name': self.item_object.name,
+
+                'image': self.item_object.get_image(),
+                'thumbnail': self.item_object.get_thumbnail(),
+
+                'tipo_veiculo': self.item_object.tipo_veiculo,
+                'placa': self.item_object.placa,
+                'ano': self.item_object.ano,
+                'deleted': self.item_object.deleted,
+                'created_at': self.item_object.created_at,
+                'updated_at': self.item_object.updated_at,   
+            }
+        
+        raise ValidationError("Not a valid item_type")
+
+    def get_entidade_financeira(self):
+        return {
+            'name': self.entidade_financeira.name,
+            'cnpj': self.entidade_financeira.cnpj,
+        }
 
 class Lance(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,7 +108,6 @@ class Lance(models.Model):
 
     money_value = DecimalField(max_digits=12, decimal_places=2, default=D(0))
 
-    # Custom field that represent's if the current vehicle is deleted to receive offers
     deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -88,6 +118,15 @@ class Lance(models.Model):
     def __str__(self):
         return f'Lance {self.id} - ${self.money_value}'
 
+    def get_leilao(self):
+        return {
+            'id': self.leilao.id,
+            'minimum_increment': self.leilao.minimum_increment,
+            'ended': self.leilao.ended,
+            'ended_at': self.leilao.ended_at,
+            'due_date': self.leilao.due_date,
+        }
+
 
 class Imovel(models.Model):
     class TipoImovel(models.TextChoices):
@@ -96,7 +135,6 @@ class Imovel(models.Model):
       RURAL = "rural"
 
     name = models.CharField(default="", blank=True, max_length=256)
-    slug = models.SlugField(default="")
     image = models.ImageField(upload_to='uploads/imoveis/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/imoveis/', blank=True, null=True)
 
@@ -111,10 +149,10 @@ class Imovel(models.Model):
     cidade = models.CharField(default="", blank=True, max_length=256)
     estado = models.CharField(max_length=2, choices=Estados.choices)
 
-    # Custom field that represent's if the object is valid
     deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('name',)
@@ -158,18 +196,18 @@ class Veiculo(models.Model):
         VAN = "van"
 
     name = models.CharField(default="", blank=True, max_length=256)
-    slug = models.SlugField(default="")
     image = models.ImageField(upload_to='uploads/veiculos/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/veiculos/', blank=True, null=True)
 
     leilao = GenericRelation(Leilao)
     tipo_veiculo = models.CharField(max_length=5, choices=TipoVeiculo.choices)
     placa = models.CharField(default="", max_length=7, blank=True)
+    ano = models.DateField(blank=True, null=True)
 
-    # Custom field that represent's if the object is valid
     deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('name',)

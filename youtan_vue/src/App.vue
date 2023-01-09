@@ -27,6 +27,8 @@
               <router-link to="/profile" class="profile">
                 Perfil
               </router-link>
+
+              <button @click="logout()" class="ml-4 button is-danger">Sair</button>
             </template>
 
             <template v-else>
@@ -74,6 +76,17 @@ export default {
         axios.defaults.headers.common['Authorization'] = "Token " + token
     } else {
         axios.defaults.headers.common['Authorization'] = ""
+    }
+  },
+
+  methods: {
+    logout() {
+      axios.defaults.headers.common["Authorization"] = ""
+      localStorage.removeItem("token")
+      localStorage.removeItem("username")
+      localStorage.removeItem("userid")
+      this.$store.commit('removeToken')
+      this.$router.push('/')
     }
   }
 }

@@ -3,53 +3,34 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">
-          Imóveis
+          Leilões ativos
         </p>
         <p class="subtitle">
-          Faça seu lance
+          Confira nossos leilões e faça seu lance!
         </p>
       </div>
 
-      <div class="column is-3" v-for="house in houses" v-bind:key="house.id">
-        <houseCard
-          :house="house"
-        />
-      </div>
     </section>
 
-    <div>ALGUMA COISA NO MEIO PRA TIRAR O BURACO</div>
-
-
-    <section class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          Veículos
-        </p>
-        <p class="subtitle">
-          Faça seu lance
-        </p>
-      </div>
-
-      <div class="column is-3" v-for="vehicle in vehicles" v-bind:key="vehicle.id">
-        <vehicleCard
-          :vehicle="vehicle"
+    <div class="pt-4 columns is-multiline">
+      <div class="column is-3" v-for="item in items" v-bind:key="item.id">
+        <itemCard
+          :item="item"
         />
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 
-import houseCard from '@/components/houseCard.vue'
-import vehicleCard from '@/components/vehicleCard.vue'
+import itemCard from '@/components/itemCard.vue'
 
 export default {
   name: 'ListLeilaoView',
   components: {
-    houseCard,
-    vehicleCard,
+    itemCard
   },
 
   data () {
@@ -77,9 +58,9 @@ export default {
   methods: {
     getLatestLeiloes() {
       axios
-        .get('/api/v1/get_latest_leiloes/')
+        .get('/api/v1/leiloes/')
         .then(response => {
-          this.houses = response.data.houses
+          this.items = response.data
           this.vehicles = response.data.vehicles
         })
         .catch(error => {

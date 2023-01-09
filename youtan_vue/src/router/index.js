@@ -4,6 +4,7 @@ import store from '@/store';
 import HomeView from '../views/HomeView.vue'
 import CreateLeilaoView from '../views/CreateLeilaoView.vue'
 import ListLeilaoView from '../views/ListLeilaoView.vue'
+import LeilaoDetailsView from '../views/LeilaoDetailsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -26,6 +27,11 @@ const routes = [
     meta: {
       requireLogin: true
     }
+  },
+  {
+    path: '/leiloes/:leilao_id',
+    name: 'leilao',
+    component: LeilaoDetailsView
   },
   {
     path: '/profile',
