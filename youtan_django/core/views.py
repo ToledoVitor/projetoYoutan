@@ -24,6 +24,27 @@ class LeiloesView(APIView):
         serializer = leilao_serializer.LeilaoSerializer(leiloes, many=True)
         return Response(serializer.data)
 
+    def post(self, request, format=None):
+        data = request.data
+
+        if not data['item_type']:
+            raise Http404
+
+        if data['item_type'] == 'house':
+            item_object = Imovel.objects.get(id=data['item_id'])
+
+        if data['item_type'] == 'vehicle':
+            item_object = Veiculo.objects.get(id=data['item_id'])
+
+        Leilao.objects.create(
+            item_object=item_object,
+            item_id=data['item_id'],
+            minimum_increment=data['minimum_increment'],
+            ended=False,
+            entidade_financeira_id=1
+        )
+        return Response({})
+
 
 class LeilaoDetailView(APIView):
     def get(self, request, leilao_id, format=None):
@@ -38,7 +59,11 @@ class LeilaoDetailView(APIView):
 
 class LanceView(APIView):
     def get(self, request, format=None):
-        lances = Lance.objects.all()
+        lances = (
+            Lance
+            .objects
+            .filter(deleted=False)
+        )
         serializer = lance_serializer.LanceSerializer(lances, many=True)
         return Response(serializer.data)
 

@@ -20,7 +20,6 @@
       <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
         <div class="navbar-end">
           <router-link to="/leiloes/ver" class="navbar-item">Ver leilões</router-link>
-          <router-link to="/leiloes/criar" class="navbar-item">Criar um leilão</router-link>
 
           <div class="navbar-item">
             <template v-if="$store.state.isAuthenticated">

@@ -25,6 +25,7 @@
           <td>{{ house.cidade }}</td>
           <td>{{ house.estado }}</td>
           <td class="is-flex is-justify-content-end">
+            <button @click="sellItem(house)" class="ml-4 button is-primary">Leiloar</button>
             <button @click="deleteItem(house.id)" class="ml-4 button is-danger">Apagar</button>
           </td>
       </tr>
@@ -47,6 +48,12 @@ export default {
   },
 
   methods: {
+    sellItem(item) {
+      const newItem = {...item}
+      newItem.item_type = 'house'
+      this.$emit('sell-item', newItem)
+    },
+
     async deleteItem(itemId) {
       axios
         .delete(`/api/v1/houses/${itemId}`)

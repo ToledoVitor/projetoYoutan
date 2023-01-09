@@ -9,23 +9,32 @@
 
       <div class="column is-12">
         <LanceSummary
-        :lances="lances"
+          @sellItem="sellItem"
+          :lances="lances"
         />
       </div>
 
       <div class="column is-12">
         <HouseSummary
-        :houses="houses"
+          @sellItem="sellItem"
+          :houses="houses"
         />
       </div>
         
       <div class="column is-12">
         <VehicleSummary
-        :vehicles="vehicles"
+          @sellItem="sellItem"
+          :vehicles="vehicles"
         />
       </div>
   
     </div>
+    
+    <SellModal
+      :isModalOpen="isModalOpen"
+      :item="itemToSell"
+      @close-modal="closeModal"
+    />
   </div>
 </template>
 
@@ -34,6 +43,7 @@ import axios from 'axios'
 import LanceSummary from '@/components/LanceSummary.vue'
 import HouseSummary from '@/components/HouseSummary.vue'
 import VehicleSummary from '@/components/VehicleSummary.vue'
+import SellModal from '@/components/SellModal.vue'
 
 export default {
   name: 'ProfileView',
@@ -41,10 +51,14 @@ export default {
     LanceSummary,
     HouseSummary,
     VehicleSummary,
+    SellModal,
   },
 
   data() {
     return {
+      isModalOpen: false,
+      itemToSell: {},
+
       lances: [],
       houses: [],
       vehicles: [],
@@ -88,7 +102,7 @@ export default {
       await axios
         .get('/api/v1/lances/')
         .then(response => {
-          this.orders = response.data
+          this.lances = response.data
         })
         .catch(error => {
           console.log(error)
@@ -104,6 +118,16 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+
+    sellItem(item) {
+      this.itemToSell = item
+      this.isModalOpen = true
+    },
+
+    closeModal() {
+      this.itemToSell = {}
+      this.isModalOpen = false
     },
   }
 }

@@ -6,9 +6,9 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Valor</th>
-          <th>Leilão</th>
-          <th>Incremento</th>
+          <th>Lance</th>
+          <th>Leilão ID</th>
+          <th>Incremento Mínimo</th>
           <th></th>
         </tr>
       </thead>
@@ -19,9 +19,9 @@
           v-bind:key="lance.id"
         >
           <td>{{ lance.id }}</td>
-          <td>{{ lance.money_value }}</td>
+          <td>{{ formatMoney(lance.money_value) }}</td>
           <td>#{{ lance.get_leilao.id }}</td>
-          <td>{{ lance.get_leilao.minimum_increment }}</td>
+          <td>{{ formatMoney(lance.get_leilao.minimum_increment) }}</td>
           <td class="is-flex is-justify-content-end">
             <button @click="deleteItem(lance.id)" class="ml-4 button is-danger">Apagar</button>
           </td>
@@ -35,6 +35,12 @@
 import axios from 'axios'
 import { toast } from 'bulma-toast'
 
+const currencyFormat = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+  minimumFractionDigits: 2,
+});
+
 export default {
   name: 'LanceSummary',
   props: {
@@ -45,6 +51,10 @@ export default {
   },
 
   methods: {
+    formatMoney(money) {
+      return currencyFormat.format(money)
+    },
+
     async deleteItem(itemId) {
       axios
         .delete(`/api/v1/lances/${itemId}`)
