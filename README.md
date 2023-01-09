@@ -8,6 +8,7 @@ PIP DEPENDENCIES:
 - pillow
 - stripe
 - model_bakery
+- pytest
 
 
 NPM DEPENDENCIES:
