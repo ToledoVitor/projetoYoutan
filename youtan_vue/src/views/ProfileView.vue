@@ -17,27 +17,39 @@
 
       <div class="column is-12">
         <HouseSummary
+          :houses="houses"
+          @createItem="createHouse"
           @sellItem="sellItem"
           @update="update"
-          :houses="houses"
         />
       </div>
         
       <div class="column is-12">
         <VehicleSummary
+          :vehicles="vehicles"
+          @createItem="createVehicle"
           @sellItem="sellItem"
           @update="update"
-          :vehicles="vehicles"
         />
       </div>
   
     </div>
     
+    <CreateHouseModal 
+      :isModalOpen="isCreateHouseModalOpen"
+      @closeModal="closeHouseModal"
+    />
+
+    <CreateVehicleModal 
+      :isModalOpen="isCreateVehicleModalOpen"
+      @closeModal="closeVehicleModal"
+    />
+
     <SellModal
-      :isModalOpen="isModalOpen"
+      :isModalOpen="isSellModalOpen"
       :item="itemToSell"
       :entities="entities"
-      @close-modal="closeModal"
+      @close-modal="closeSellModal"
     />
   </div>
 </template>
@@ -46,7 +58,11 @@
 import axios from 'axios'
 import LanceSummary from '@/components/LanceSummary.vue'
 import HouseSummary from '@/components/HouseSummary.vue'
+import CreateHouseModal from '@/components/CreateHouseModal.vue'
+
 import VehicleSummary from '@/components/VehicleSummary.vue'
+import CreateVehicleModal from '@/components/CreateVehicleModal.vue'
+
 import SellModal from '@/components/SellModal.vue'
 
 export default {
@@ -54,14 +70,19 @@ export default {
   components: {
     LanceSummary,
     HouseSummary,
+    CreateHouseModal,
     VehicleSummary,
+    CreateVehicleModal,
     SellModal,
   },
 
   data() {
     return {
-      isModalOpen: false,
       itemToSell: {},
+
+      isSellModalOpen: false,
+      isCreateHouseModalOpen: false,
+      isCreateVehicleModalOpen: false,
 
       entities: [],
       lances: [],
@@ -141,14 +162,32 @@ export default {
         })
     },
 
-    sellItem(item) {
-      this.itemToSell = item
-      this.isModalOpen = true
+    createHouse () {
+      this.isCreateHouseModalOpen = true
     },
 
-    closeModal() {
+    closeHouseModal () {
+      this.isCreateHouseModalOpen = false
+      this.update()
+    },
+
+    createVehicle () {
+      this.isCreateVehicleModalOpen = true
+    },
+
+    closeVehicleModal () {
+      this.isCreateVehicleModalOpen = false
+      this.update()
+    },
+
+    sellItem(item) {
+      this.itemToSell = item
+      this.isSellModalOpen = true
+    },
+
+    closeSellModal() {
       this.itemToSell = {}
-      this.isModalOpen = false
+      this.isSellModalOpen = false
     },
   }
 }

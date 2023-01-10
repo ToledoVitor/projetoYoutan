@@ -1,6 +1,9 @@
 <template>
   <div class="box mb-4">
-    <h3 class="is-size-4 mb-6">Meus Imóveis</h3>
+    <div class="is-flex">
+      <h3 class="is-size-4 mb-6">Meus Imóveis</h3>
+      <button @click="createItem" class="ml-4 button is-primary">Criar novo</button>
+     </div>
 
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
@@ -72,7 +75,11 @@ export default {
         .catch(error => {
           console.log(error)
         })          
-    } 
+    },
+
+    createItem() {
+      this.$emit('createItem')
+    }
   }
 }
 </script>

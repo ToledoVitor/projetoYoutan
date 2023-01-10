@@ -160,7 +160,7 @@ class Imovel(models.Model):
         return self.name
 
     def get_image(self):
-        if self.image:
+        if self.image and self.image.name:
             return 'http://127.0.0.1:3000' + self.image.url
         return ''
 
@@ -168,9 +168,12 @@ class Imovel(models.Model):
         if self.thumbnail:
             return 'http://127.0.0.1:3000' + self.thumbnail.url
         else:
-            if self.image:
-                self.thumbnail = self.make_thumbnail(self.image)
-                self.save()
+            if self.image and self.image.name:
+                try:
+                    self.thumbnail = self.make_thumbnail(self.image)
+                    self.save()
+                except:
+                    return
 
                 return 'http://127.0.0.1:3000' + self.thumbnail.url
             else:
@@ -201,7 +204,7 @@ class Veiculo(models.Model):
     leilao = GenericRelation(Leilao)
     tipo_veiculo = models.CharField(max_length=5, choices=TipoVeiculo.choices)
     placa = models.CharField(default="", max_length=7, blank=True)
-    ano = models.DateField(blank=True, null=True)
+    ano = models.CharField(default="", blank=True, max_length=256)
 
     deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -215,7 +218,7 @@ class Veiculo(models.Model):
         return self.name
 
     def get_image(self):
-        if self.image:
+        if self.image and self.image.name:
             return 'http://127.0.0.1:3000' + self.image.url
         return ''
 
@@ -223,9 +226,12 @@ class Veiculo(models.Model):
         if self.thumbnail:
             return 'http://127.0.0.1:3000' + self.thumbnail.url
         else:
-            if self.image:
-                self.thumbnail = self.make_thumbnail(self.image)
-                self.save()
+            if self.image and self.image.name:
+                try:
+                    self.thumbnail = self.make_thumbnail(self.image)
+                    self.save()
+                except:
+                    return
 
                 return 'http://127.0.0.1:3000' + self.thumbnail.url
             else:

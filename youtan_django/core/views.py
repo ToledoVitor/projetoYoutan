@@ -98,6 +98,24 @@ class HouseView(APIView):
         serializer = imovel_serializer.ImovelSerializer(houses, many=True)
         return Response(serializer.data)
 
+    def post(self, request, format=None):
+        data = request.data
+        if not data['image']:
+            raise Http404
+
+        Imovel.objects.create(
+            name=data['name'],
+            tipo_imovel=data['tipo_imovel'],
+            logradouro=data['logradouro'],
+            bairro=data['bairro'],
+            numero=data['numero'],
+            cep=data['cep'],
+            cidade=data['cidade'],
+            estado=data['estado'],
+            image=data['image'],
+        )
+        return Response({})
+
     def delete(self, request, house_id, format=None):
         try:
             house = Imovel.objects.get(id=house_id)
@@ -118,6 +136,19 @@ class VehicleView(APIView):
         )
         serializer = veiculo_serializer.VeiculoSerializer(vehicles, many=True)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        data = request.data
+        if not data['image']:
+            raise Http404
+
+        Veiculo.objects.create(
+            tipo_veiculo=data['tipo_veiculo'],
+            placa=data['placa'],
+            ano=data['ano'],
+            image=data['image'],
+        )
+        return Response({})
 
     def delete(self, request, vehicle_id, format=None):
         try:
