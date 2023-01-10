@@ -21,12 +21,12 @@
         <div class="navbar-end">
           <router-link to="/leiloes/ver" class="navbar-item">Ver leilões</router-link>
 
+          <router-link v-if="$store.state.isAuthenticated" to="/profile" class="navbar-item">
+            Perfil
+          </router-link>
+
           <div class="navbar-item">
             <template v-if="$store.state.isAuthenticated">
-              <router-link to="/profile" class="profile">
-                Perfil
-              </router-link>
-
               <button @click="logout()" class="ml-4 button is-danger">Sair</button>
             </template>
 
