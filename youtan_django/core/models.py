@@ -47,14 +47,14 @@ class Leilao(models.Model):
         return f'Leilao {self.id} - FIM: {self.due_date}'
 
     def get_latest_lance_value(self):
-        return (
+        lance_value = (
             self
-            .lance_set
+            .lance_set 
             .filter(deleted=False)
             .order_by("-created_at")
-            .values("money_value")
-            .first()
+            .values_list("money_value", flat=True)
         )
+        return lance_value[0] if lance_value else 0
 
     def get_item_type(self):
         return self.item_type.app_labeled_name
@@ -103,9 +103,8 @@ class Leilao(models.Model):
         }
 
 class Lance(models.Model):
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     leilao = models.ForeignKey(Leilao, on_delete=models.CASCADE)
-
     money_value = DecimalField(max_digits=12, decimal_places=2, default=D(0))
 
     deleted = models.BooleanField(default=False)

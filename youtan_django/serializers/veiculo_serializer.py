@@ -10,6 +10,7 @@ class VeiculoSerializer(serializers.ModelSerializer):
             'name',
             'tipo_veiculo',
             'placa',
+            'ano',
             'deleted',
             'created_at',
             'updated_at',

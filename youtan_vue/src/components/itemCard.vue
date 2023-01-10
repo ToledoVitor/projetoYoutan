@@ -34,15 +34,19 @@
       Ano: {{ item.get_item_object?.ano }}
     </template>
 
-    <a class="mt-4 buttons is-flex is-justify-content-center">
-      <router-link to="/leiloes" class="button is-dark is-normal">
-        Dar lance
-      </router-link>
-    </a>
+    <div class="mt-4 is-flex is-justify-content-center">
+      <button @click="makeLance(item)" class="ml-4 button is-primary">Dar lance</button>
+    </div>
   </div>
 </template>
 
 <script>
+const currencyFormat = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+  minimumFractionDigits: 2,
+});
+
 export default {
   name: 'ItemCard',
   props: {
@@ -52,14 +56,18 @@ export default {
     },
   },
 
+  methods: {
+    makeLance (item) {
+      this.$emit('make-lance', item)
+    },
+  },
+
   computed: {
     getNextLance () {
       if (!this.item) {
         return ''
       }
-
-      const minimum_increment = parseInt(this.item.minimum_increment)
-      return `R$ ${this.item.get_latest_lance_value + minimum_increment},00`
+      return currencyFormat.format(this.item.get_latest_lance_value)
     },
 
     isHouse () {

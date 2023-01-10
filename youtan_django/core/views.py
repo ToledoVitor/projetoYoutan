@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from youtan_django.serializers import (
+    entidade_serializer,
     imovel_serializer,
     lance_serializer,
     leilao_serializer,
@@ -36,12 +37,13 @@ class LeiloesView(APIView):
         if data['item_type'] == 'vehicle':
             item_object = Veiculo.objects.get(id=data['item_id'])
 
+        entidade_financeira = EntidadeFinanceira.objects.get(name=data['financial_entity'])
         Leilao.objects.create(
             item_object=item_object,
             item_id=data['item_id'],
             minimum_increment=data['minimum_increment'],
+            entidade_financeira=entidade_financeira,
             ended=False,
-            entidade_financeira_id=1
         )
         return Response({})
 
@@ -66,6 +68,24 @@ class LanceView(APIView):
         )
         serializer = lance_serializer.LanceSerializer(lances, many=True)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        data = request.data
+        Lance.objects.create(
+            money_value=data['value'],
+            leilao_id=data['leilao_id'],
+        )
+        return Response({})
+
+    def delete(self, request, lance_id, format=None):
+        try:
+            lance = Lance.objects.get(id=lance_id)
+        except Lance.DoesNotExist:
+            raise Http404
+
+        lance.deleted = True
+        lance.save()
+        return Response({})
 
 
 class HouseView(APIView):
@@ -111,7 +131,13 @@ class VehicleView(APIView):
 
 
 class EntidadeFinanceiraView(APIView):
+    def get(self, request, format=None):
+        entidades = EntidadeFinanceira.objects.all()
+        serializer = entidade_serializer.EntidadeFinanceiraSerializer(entidades, many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
-        EntidadeFinanceira.objects.create()
+        # Qual a regra de negócio??
+        # Pelo que entendi, usuário não pode cadastrar, só admin
         return Response({})
 

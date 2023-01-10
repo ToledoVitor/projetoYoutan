@@ -66,6 +66,8 @@ export default {
               duration: 2 * 1000,
               position: 'bottom-center',
             })
+
+          this.$emit('update')
         })
         .catch(error => {
           console.log(error)

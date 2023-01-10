@@ -16,9 +16,16 @@
       <div class="column is-3" v-for="item in items" v-bind:key="item.id">
         <itemCard
           :item="item"
+          @make-lance="makeLance"
         />
       </div>
     </div>
+
+    <MakeLance
+      :itemToBuy="itemToBuy"
+      :isModalOpen="isModalOpen"
+      @close-modal="closeModal"
+    />
   </div>
 </template>
 
@@ -26,26 +33,21 @@
 import axios from 'axios'
 
 import itemCard from '@/components/itemCard.vue'
+import MakeLance from '@/components/MakeLance.vue';
 
 export default {
   name: 'ListLeilaoView',
   components: {
-    itemCard
-  },
+    itemCard,
+    MakeLance,
+},
 
   data () {
     return {
-      houses: [],
-      vehicles: [],
+      items: [],
 
-      items: [
-        {
-          id: 1,
-          name: 'Teste',
-          money_value: 1000,
-          get_thumbnail: 'https://images.adsttc.com/media/images/613f/df13/8580/2b01/6405/340e/newsletter/whatsapp-image-2021-02-09-at-10-9.jpg?1631575834',
-        }
-      ]
+      itemToBuy: null,
+      isModalOpen: false,
     }
   },
 
@@ -61,11 +63,20 @@ export default {
         .get('/api/v1/leiloes/')
         .then(response => {
           this.items = response.data
-          this.vehicles = response.data.vehicles
         })
         .catch(error => {
           console.log(error)
         })
+    },
+
+    makeLance (item) {
+      this.itemToBuy = item
+      this.isModalOpen = true
+    },
+    
+    closeModal () {
+      this.isModalOpen = false
+      this.getLatestLeiloes()
     }
   }
 }

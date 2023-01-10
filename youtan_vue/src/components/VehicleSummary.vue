@@ -50,7 +50,7 @@ export default {
   methods: {
     sellItem(item) {
       const newItem = {...item}
-      newItem.item_type = 'house'
+      newItem.item_type = 'vehicle'
       this.$emit('sell-item', newItem)
     },
 
@@ -66,6 +66,8 @@ export default {
               duration: 2 * 1000,
               position: 'bottom-center',
             })
+
+          this.$emit('update')
         })
         .catch(error => {
           console.log(error)

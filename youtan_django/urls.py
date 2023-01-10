@@ -21,7 +21,7 @@ urlpatterns = [
     path('api/v1/vehicles/<int:vehicle_id>', views.VehicleView.as_view()),
 
     path('api/v1/leiloes/', views.LeiloesView.as_view()),
-    path('api/v1/<int:leilao_id>/leilao/', views.LeilaoDetailView.as_view()),
+    path('api/v1/leiloes/<int:leilao_id>', views.LeilaoDetailView.as_view()),
 
     path('api/v1/entidade-financeira/', views.EntidadeFinanceiraView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
