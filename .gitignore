@@ -6,13 +6,4 @@ pnpm-debug.log*
 __pycache__/
 
 venv
-youtan_django/__pycache__/__init__.cpython-38.pyc
-youtan_django/__pycache__/settings.cpython-38.pyc
-youtan_django/__pycache__/urls.cpython-38.pyc
-youtan_django/core/__pycache__/__init__.cpython-38.pyc
-youtan_django/core/__pycache__/apps.cpython-38.pyc
-youtan_django/core/__pycache__/admin.cpython-38.pyc
-youtan_django/core/__pycache__/commons.cpython-38.pyc
-youtan_django/core/__pycache__/models.cpython-38.pyc
-youtan_django/core/__pycache__/views.cpython-38.pyc
-youtan_django/core/migrations/__pycache__/__init__.cpython-38.pyc
+node_modules
