@@ -6,6 +6,7 @@ A ideia é criar um sistema de leilões, onde pessoas possam cadastrar, dar lanc
 e ver leilões de imóveis e automóveis.
 
 
+
 ## Requisitos do projeto:
 
 O projeto é todo composto pro Django + Vue
@@ -16,6 +17,7 @@ E as dependências do frontend ficam em package.json e package-log.json
 Se você está querendo rodar o projeto existem dois caminhos: Na unha, com docker.
 
 Eu pessoal prefiro subir o projeto na mão, mas cada um tem sua preferência.
+
 
 
 ## Subindo o projeto na mão:
@@ -38,6 +40,11 @@ com `npm install`
 Também é preciso instalar o axios `npm install axios` e bulma (pacote de css) usado
 `npm install bulma`
 
+Com os pacotes todos instalados, na raiz do projeto rode:
+- `./manage.py runserver 3000` para subir o backend na porta 3000
+- `npm run serve` para subir o frontend
+
+
 
 ## Subindo o projeto com docker compose:
 
@@ -53,14 +60,63 @@ Se estiver tudo certo com sua instalação, o terminal deve lançar algo como:
 Docker Compose version v2.14.1
 ```
 
+
 Se precisar fazer a instalação, o seguinte link pode ser útil:
 https://docs.docker.com/compose/install/linux/
 
 Com o docker compose instalado, basta rodar
 ```sh
-docker compose up --build
+docker compose up --build # cria os containers e sobe as aplicações 
 ```
-Isso já irá criar os containers e subir as aplicações 
+
+
+
+## Usando o projeto
+
+Quando você tiver rodando o projeto, já irão existir alguns dados prontos para testar.
+
+Existem alguns imóveis, veículos, lances e leilões criados. Além de duas instituições
+financeiras feitas para teste.
+
+Como premissa, foi assumido que as instituições financeiras só podem ser criadas,
+editadas e apagadas via admin. Elas não estão disponíves para o usuário comum.
+
+### Acessando o admin
+
+Com a aplicação rodando, acesse a url `/admin` para ver o painel de admin. Se você
+subiu o django na porta 3000, a url que irá acessar é `http://127.0.0.1:3000/admin/`
+
+No painel de admin você pode fazer login com o usuário:
+```py
+Username="admin"
+password="admin"
+
+```
+
+
+Assim, você terá acesso a todos os dados criados, e poderá editálos.
+
+Se por acaso quiser criar um novo superusárinao, rode na raiz do projeto
+`./manage.py createsuperuser` e insira seus dados.
+
+
+
+### Logando seu usuário
+
+Na url `/login` é possível fazer login com sua conta, ou cadastrar uma nova em `/signup`.
+
+Já existe um usário criado com dados populados que sugire que use, assim, acesse
+a url `/login` e faça login com o usuário:
+
+```sh
+usuario=user
+senha=user_pass
+```
+
+
+Ao fazer o login você já será redirecionado para a página de perfil, onde existem
+dados já criados.
+
 
 ## Considerações sobre o projeto
 

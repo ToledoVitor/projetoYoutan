@@ -4,7 +4,7 @@
       <img :src="item.get_item_object?.thumbnail">
     </figure>
 
-    <p class="mt-2 is-size-4 has-text-success">{{ getNextLance }}</p>
+    <p class="mt-2 is-size-4 has-text-success">{{ getNextLance }}</p> {{ item?.id }}
     <span
       class="tag is-medium is-justify-content-flex-end"
       :class="{
@@ -67,7 +67,9 @@ export default {
       if (!this.item) {
         return ''
       }
-      return currencyFormat.format(this.item.get_latest_lance_value)
+
+      const increment = parseInt(this.item.minimum_increment)
+      return currencyFormat.format(this.item.get_latest_lance_value + increment)
     },
 
     isHouse () {
