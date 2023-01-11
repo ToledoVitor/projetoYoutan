@@ -13,12 +13,39 @@ O projeto é todo composto pro Django + Vue
 As depedências do backend ficam em requirements.txt
 E as dependências do frontend ficam em package.json e package-log.json
 
-Se você está querendo rodar o projeto existem dois caminhos: Na unha, com docker
+Se você está querendo rodar o projeto existem dois caminhos: Na unha, com docker.
+
+Eu pessoal prefiro subir o projeto na mão, mas cada um tem sua preferência.
 
 
-## Subindo o projeto com docker-compose:
+## Subindo o projeto na mão:
 
-O primeiro passa é ter instalado o docker compose.
+Apesar de este não ser o caminho mais prático, existem algumas vantagens em subir
+o projeto na mão.
+
+Uma delas é que você fica menos preso as decisões do docker, tem mais acesso e
+visibilidade do que está rodando, e consegue rodar isolado apenas uma parte ou 
+outra do projeto. Além de ser mais fácil caso precise debugar algo em sua IDE.
+
+### Se você vai seguir por esse caminho, primeiro crie sua virtualenv.
+
+Com sua virtualenv, na raíz do projeto rode instale as dependências do backend com
+`pip install -r requirements.txt`
+
+Feito isso, instale o vue `npm install -g @vue/cli`, e as dependências do frontend
+com `npm install`
+
+Também é preciso instalar o axios `npm install axios` e bulma (pacote de css) usado
+`npm install bulma`
+
+
+## Subindo o projeto com docker compose:
+
+Subir o projeto com docker possui a vantagem de ser mais prático, afinal, você
+não precisa se preocupar com os requisitos de instalação, virtualenvs, portas,
+tudo já está configurado para você.
+
+### Se você vai seguir por esse caminho, o primeiro passo é instalar o docker compose.
 Você pode testar a instalação com `docker compose version`
 
 Se estiver tudo certo com sua instalação, o terminal deve lançar algo como:
@@ -29,26 +56,11 @@ Docker Compose version v2.14.1
 Se precisar fazer a instalação, o seguinte link pode ser útil:
 https://docs.docker.com/compose/install/linux/
 
-Com o docker compose instalado, basta
+Com o docker compose instalado, basta rodar
 ```sh
-docker compose up --build # cria os containers e sobe as aplicações 
+docker compose up --build
 ```
-
-## Subindo o projeto na unha:
-
-Esse não é o caminho mais fácil nem mais prático, mas algumas pessoas preferem
-seguir por ele.
-
-Primeiro, crie sua virtualenv.
-
-Com sua virtualenv, na raíz do projeto rode instale as dependências do backend com
-`pip install -r requirements.txt`
-
-Feito isso, instale o vue `npm install -g @vue/cli`, e as dependências do frontend
-com `npm install`
-
-Também é preciso instalar o axios `npm install axios` e bulma (pacote de css) usado
-`npm install bulma`
+Isso já irá criar os containers e subir as aplicações 
 
 ## Considerações sobre o projeto
 
