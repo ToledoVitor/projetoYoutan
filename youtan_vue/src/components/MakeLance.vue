@@ -110,7 +110,7 @@ export default {
       return currencyFormat.format(money)
     },
 
-    decrementLance () {
+    decrementLance() {
       if (this.value <= this.minimal_value) {
         return
       }
@@ -118,7 +118,7 @@ export default {
       this.value -= parseInt(this.itemToBuy.minimum_increment)
     },
 
-    incrementLance () {
+    incrementLance() {
       // Valor aleatório para limitar lance máximo
       if (this.value >= 10 * 1000 * 1000) {
         return

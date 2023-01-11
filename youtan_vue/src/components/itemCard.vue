@@ -57,13 +57,13 @@ export default {
   },
 
   methods: {
-    makeLance (item) {
+    makeLance(item) {
       this.$emit('make-lance', item)
     },
   },
 
   computed: {
-    getNextLance () {
+    getNextLance() {
       if (!this.item) {
         return ''
       }
@@ -72,11 +72,11 @@ export default {
       return currencyFormat.format(this.item.get_latest_lance_value + increment)
     },
 
-    isHouse () {
+    isHouse() {
       return this.item?.get_item_type === "core | imovel"
     },
 
-    isVehicle () {
+    isVehicle() {
       return this.item?.get_item_type === "core | veiculo"
     }
   }

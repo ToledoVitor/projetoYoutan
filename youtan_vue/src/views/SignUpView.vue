@@ -60,7 +60,7 @@ import { toast } from 'bulma-toast'
 
 export default {
   name: 'SignUp',
-  data () {
+  data() {
     return {
       username: '',
       password: '',
@@ -69,7 +69,7 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     document.title = 'Cadastrar | Leiloẽs Já!'
   },
 

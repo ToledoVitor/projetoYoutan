@@ -52,7 +52,7 @@ import axios from 'axios';
 
 export default {
   name: 'SignUp',
-  data () {
+  data() {
     return {
       username: '',
       password: '',
@@ -60,7 +60,7 @@ export default {
     }
   },
   
-  mounted () {
+  mounted() {
     document.title = 'Login | Leiloẽs Já!'
   },
 

@@ -42,7 +42,7 @@ export default {
     MakeLance,
 },
 
-  data () {
+  data() {
     return {
       items: [],
 
@@ -69,12 +69,12 @@ export default {
         })
     },
 
-    makeLance (item) {
+    makeLance(item) {
       this.itemToBuy = item
       this.isModalOpen = true
     },
     
-    closeModal () {
+    closeModal() {
       this.isModalOpen = false
       this.getLatestLeiloes()
     }

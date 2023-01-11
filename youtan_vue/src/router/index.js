@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store';
 
 import HomeView from '../views/HomeView.vue'
-import CreateLeilaoView from '../views/CreateLeilaoView.vue'
 import ListLeilaoView from '../views/ListLeilaoView.vue'
 import LeilaoDetailsView from '../views/LeilaoDetailsView.vue'
 import ProfileView from '../views/ProfileView.vue'
@@ -19,14 +18,6 @@ const routes = [
     path: '/leiloes/ver',
     name: 'ver-leiloes',
     component: ListLeilaoView
-  },
-  {
-    path: '/leiloes/criar',
-    name: 'criar-leiloes',
-    component: CreateLeilaoView,
-    meta: {
-      requireLogin: true
-    }
   },
   {
     path: '/leiloes/:leilao_id',

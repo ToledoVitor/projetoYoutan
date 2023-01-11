@@ -107,7 +107,7 @@ export default {
       await this.getEntities()
     },
 
-    async getMyHouses () {
+    async getMyHouses() {
       await axios
         .get('/api/v1/houses/')
         .then(response => {
@@ -118,7 +118,7 @@ export default {
         })          
     },
     
-    async getMyVehicles () {
+    async getMyVehicles() {
       await axios
         .get('/api/v1/vehicles/')
         .then(response => {
@@ -162,20 +162,20 @@ export default {
         })
     },
 
-    createHouse () {
+    createHouse() {
       this.isCreateHouseModalOpen = true
     },
 
-    closeHouseModal () {
+    closeHouseModal() {
       this.isCreateHouseModalOpen = false
       this.update()
     },
 
-    createVehicle () {
+    createVehicle() {
       this.isCreateVehicleModalOpen = true
     },
 
-    closeVehicleModal () {
+    closeVehicleModal() {
       this.isCreateVehicleModalOpen = false
       this.update()
     },
