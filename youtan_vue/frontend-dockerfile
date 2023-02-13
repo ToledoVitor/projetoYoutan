@@ -1,13 +1,21 @@
 FROM node:14.17.0-stretch
-COPY . /app
-WORKDIR /app
-EXPOSE 8000
 
-# RUN ["chmod", "+x", "./app/frontend-setup.sh"]
+RUN mkdir /app
+WORKDIR /app
+
+COPY package.json ./
+COPY package-lock.json ./
 
 RUN npm install -g npm
+RUN npm install
+
+COPY ./youtan_vue .
+
 RUN npm install -g @vue/cli 
 
-RUN npm install axios
-RUN npm install bulma
-RUN npm install
+RUN npm install -g axios
+RUN npm install -g bulma
+RUN npm install -g bulma-toast
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]

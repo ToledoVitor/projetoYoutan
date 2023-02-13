@@ -1,5 +1,6 @@
 #!/bin/sh
-cd src/
+
+cd youtan_vue/
 npm install
 
 npm run serve
