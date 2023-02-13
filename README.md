@@ -41,7 +41,7 @@ Também é preciso instalar o axios `npm install axios` e bulma (pacote de css) 
 `npm install bulma`
 
 Com os pacotes todos instalados, na raiz do projeto rode:
-- `./manage.py runserver 3000` para subir o backend na porta 3000
+- `./manage.py runserver 8000` para subir o backend na porta 8000
 - `npm run serve` para subir o frontend
 
 
@@ -84,7 +84,7 @@ editadas e apagadas via admin. Elas não estão disponíves para o usuário comu
 ### Acessando o admin
 
 Com a aplicação rodando, acesse a url `/admin` para ver o painel de admin. Se você
-subiu o django na porta 3000, a url que irá acessar é `http://127.0.0.1:3000/admin/`
+subiu o django na porta 8000, a url que irá acessar é `http://127.0.0.1:8000/admin/`, ou então `http://localhost:8000/admin/`
 
 No painel de admin você pode fazer login com o usuário:
 ```py

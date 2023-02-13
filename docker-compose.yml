@@ -1,17 +1,16 @@
 
-version: '3.3'
+version: '3.9'
 
 services:
   django:
-    build:
-      context: .
-      dockerfile: youtan_django/backend-dockerfile
-    container_name: docker-django-backend
-    command: ./youtan_django/backend-setup.sh
+    image: django:dev
+    container_name: docker-django
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - .:/code
     ports:
-      - "8001:8001"
+      - "8000:8000"
 
   vue:
     build:
