@@ -70,6 +70,15 @@ docker compose up --build # cria os containers e sobe as aplicações
 ```
 
 
+## Criando dados de teste
+
+Como todo projeto, precisamos de dados falsos para testar a aplicação e conseguir desenvolver.
+Para isso, existe um comando chamado `devdb` que fica em core/management/commands.
+
+Esse comando popula alguns dados básicos, criando um superusuário, alguns leilões e lances.
+Se você subir o projeto usando o docker compose, o comando já deve ser rodado sozinho, se
+estiver subindo o projeto na mão, é só rodar `python manage.py devdb` que irá funcionar.
+
 
 ## Usando o projeto
 
