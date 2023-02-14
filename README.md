@@ -12,11 +12,11 @@ e ver leilões de imóveis e automóveis.
 O projeto é todo composto pro Django + Vue
 
 As depedências do backend ficam em requirements.txt
-E as dependências do frontend ficam em package.json e package-log.json
+e as dependências do frontend ficam em package.json e package-log.json
 
-Se você está querendo rodar o projeto existem dois caminhos: Na unha, com docker.
+Se você está querendo rodar o projeto existem dois caminhos: Na mão, no docker.
 
-Eu pessoal prefiro subir o projeto na mão, mas cada um tem sua preferência.
+Eu gosto de subir o projeto na mão, mas cada um tem sua preferência.
 
 
 
@@ -64,6 +64,7 @@ Docker Compose version v2.14.1
 Se precisar fazer a instalação, o seguinte link pode ser útil:
 https://docs.docker.com/compose/install/linux/
 
+
 Com o docker compose instalado, basta rodar
 ```sh
 docker compose up --build # cria os containers e sobe as aplicações 
@@ -77,7 +78,7 @@ Para isso, existe um comando chamado `devdb` que fica em core/management/command
 
 Esse comando popula alguns dados básicos, criando um superusuário, alguns leilões e alguns lances.
 Se você estiver subindo o projeto pela primeira vez usando docker compose, o docker já deverá rodar
-o comando sozinho, e você deverá ver no terminal as mensagens.
+o comando sozinho, e no meio das mensagens do docker você deverá ver no terminal o output:
 
 ```sh
 docker-django-backend     | SuperUser criado com sucesso
@@ -107,6 +108,7 @@ financeiras feitas para teste.
 Como premissa, foi assumido que as instituições financeiras só podem ser criadas,
 editadas e apagadas via admin. Elas não estão disponíves para o usuário comum.
 
+
 ### Acessando o admin
 
 Com a aplicação rodando, acesse a url `/admin` para ver o painel de admin. Se você não
@@ -122,7 +124,7 @@ password="admin"
 Esse usuário irá te dar acesso a todos as páginas e endpoints do site.
 Você terá acesso a todos os dados criados, e poderá editá-los também caso queira.
 
-Se preferir criar um novo superusárinao, rode na raiz do projeto
+Se preferir criar um novo super usuário, rode na raiz do projeto
 `./manage.py createsuperuser` e insira seus dados.
 
 
@@ -139,14 +141,13 @@ usuario=user
 senha=user_pass
 ```
 
-
 Ao fazer o login você já será redirecionado para a página de perfil, onde existem
 dados já criados.
 
 
 ## Considerações sobre o projeto
 
-Conforme dito, esse é um projeto base, de uma única sprint e feito em poucos dias
+Esse é um projeto básico, de uma única sprint e feito em poucos dias
 como um teste técnico
 
 O projeto possui vários pontos de melhoria, alguns dos que já encontrei são:
@@ -166,7 +167,8 @@ feitos na pressa, e faça alguns desses items.
 
 Mas não vou fazer nenhuma promessa por agora!
 
+
 ## Disclaimer
 
 Se você por acaso estiver tentando rodar esse projeto e não esteja conseguindo
-Fique a vontade para entrar comigo e tentamos resolver o problema juntos :)
+Fique a vontade para entrar em contato comigo e tentamos resolver o problema juntos :)
