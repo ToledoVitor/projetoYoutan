@@ -75,14 +75,31 @@ docker compose up --build # cria os containers e sobe as aplicações
 Como todo projeto, precisamos de dados falsos para testar a aplicação e conseguir desenvolver.
 Para isso, existe um comando chamado `devdb` que fica em core/management/commands.
 
-Esse comando popula alguns dados básicos, criando um superusuário, alguns leilões e lances.
-Se você subir o projeto usando o docker compose, o comando já deve ser rodado sozinho, se
-estiver subindo o projeto na mão, é só rodar `python manage.py devdb` que irá funcionar.
+Esse comando popula alguns dados básicos, criando um superusuário, alguns leilões e alguns lances.
+Se você estiver subindo o projeto pela primeira vez usando docker compose, o docker já deverá rodar
+o comando sozinho, e você deverá ver no terminal as mensagens.
 
+```sh
+docker-django-backend     | SuperUser criado com sucesso
+docker-django-backend     | Entidades Financeiras criadas com sucesso
+docker-django-backend     | Imoveis criados com sucesso
+docker-django-backend     | Veiculos criados com sucesso
+docker-django-backend     | Leiloes criados com sucesso
+docker-django-backend     | Lances criados com sucesso
+```
+
+Se você estiver subindo o projeto fora do docker, ou o comando não rodar sozinho, você pode
+rodar ele com os seguintes comandos, nessa ordem.
+
+```sh
+python manage.py migrate
+python manage.py devdb
+```
 
 ## Usando o projeto
 
-Quando você tiver rodando o projeto, já irão existir alguns dados prontos para testar.
+Se você não pulou o passo anterior, quando você tiver rodando o projeto, já irão existir alguns
+dados prontos para serem usados.
 
 Existem alguns imóveis, veículos, lances e leilões criados. Além de duas instituições
 financeiras feitas para teste.
@@ -92,20 +109,20 @@ editadas e apagadas via admin. Elas não estão disponíves para o usuário comu
 
 ### Acessando o admin
 
-Com a aplicação rodando, acesse a url `/admin` para ver o painel de admin. Se você
-subiu o django na porta 8000, a url que irá acessar é `http://127.0.0.1:8000/admin/`, ou então `http://localhost:8000/admin/`
+Com a aplicação rodando, acesse a url `/admin` para ver o painel de admin. Se você não
+mudou a porta e subiu o django na porta 8000, a url que irá acessar é `http://127.0.0.1:8000/admin/`,
+ou então `http://localhost:8000/admin/`
 
 No painel de admin você pode fazer login com o usuário:
 ```py
 Username="admin"
 password="admin"
-
 ```
 
+Esse usuário irá te dar acesso a todos as páginas e endpoints do site.
+Você terá acesso a todos os dados criados, e poderá editá-los também caso queira.
 
-Assim, você terá acesso a todos os dados criados, e poderá editálos.
-
-Se por acaso quiser criar um novo superusárinao, rode na raiz do projeto
+Se preferir criar um novo superusárinao, rode na raiz do projeto
 `./manage.py createsuperuser` e insira seus dados.
 
 

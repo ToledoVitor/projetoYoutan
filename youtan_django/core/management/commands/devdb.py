@@ -1,9 +1,6 @@
 import os
-from PIL import Image
 
-from django.contrib.auth.management.commands import createsuperuser
 from django.contrib.auth.models import User
-
 from django.core.management.base import BaseCommand
 
 from youtan_django.core.models import (
@@ -91,7 +88,6 @@ class Command(BaseCommand):
                               numero="200",
                               cep="22220000",
                               cidade="Cabo Frio",
-                              estado="RJ",
                               deleted=False)
 
 
@@ -172,32 +168,33 @@ class Command(BaseCommand):
                               ended=False)
 
     def create_lances(self):
+        leiloes = Leilao.objects.all()
         Lance.objects.create(created_by_id=1,
-                             leilao_id=1,
-                             money_value=10000.00,
+                             leilao_id=leiloes[0].id,
+                             money_value=leiloes[0].minimum_increment,
                              deleted=False)
 
         Lance.objects.create(created_by_id=1,
-                             leilao_id=2,
-                             money_value=7500.00,
+                             leilao_id=leiloes[1].id,
+                             money_value=leiloes[1].minimum_increment,
                              deleted=False)
 
         Lance.objects.create(created_by_id=1,
-                             leilao_id=2,
-                             money_value=15000.00,
+                             leilao_id=leiloes[1].id,
+                             money_value=(leiloes[1].minimum_increment * 2),
                              deleted=False)
 
         Lance.objects.create(created_by_id=1,
-                             leilao_id=2,
-                             money_value=22500.00,
+                             leilao_id=leiloes[1].id,
+                             money_value=(leiloes[1].minimum_increment * 3),
                              deleted=False)
 
         Lance.objects.create(created_by_id=1,
-                             leilao_id=3,
-                             money_value=20400.00,
+                             leilao_id=leiloes[2].id,
+                             money_value=(leiloes[2].minimum_increment * 2),
                              deleted=False)
 
         Lance.objects.create(created_by_id=1,
-                             leilao_id=4,
-                             money_value=200000.00,
+                             leilao_id=leiloes[3].id,
+                             money_value=leiloes[3].minimum_increment,
                              deleted=False)
