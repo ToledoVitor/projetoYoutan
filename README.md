@@ -1,6 +1,6 @@
 # projetoYoutan
 
-Esse projeto é parte de um teste feio em poucos dias.
+Esse projeto é parte de um teste feito em poucos dias.
 
 A ideia é criar um sistema de leilões, onde pessoas possam cadastrar, dar lances
 e ver leilões de imóveis e automóveis.
